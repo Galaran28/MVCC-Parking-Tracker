@@ -74,6 +74,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Lot.h" />
+    <ClInclude Include="randHead.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="Lot.cpp" />
+    <ClCompile Include="RandImplement.cpp" />
+    <ClCompile Include="RandomNumGenerator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

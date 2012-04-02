@@ -26,7 +26,7 @@ void Lot::Subtract()
 	--currentSize;
 }
 
-void Lot::PercentageFull()
+void Lot::PercentageFull() //why not combine this with getPercentage?
 { 
 	percentage = (getCurrentSize()/getMaxSize()) * 100; 
 }
