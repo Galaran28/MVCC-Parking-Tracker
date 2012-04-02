@@ -1,0 +1,4 @@
+LIBRARY [Car Counter]  ; Car counter test app
+
+EXPORTS                ; Version of DLL
+	ReportVersion
