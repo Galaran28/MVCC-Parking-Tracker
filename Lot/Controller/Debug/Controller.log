@@ -1,0 +1,18 @@
+﻿Build started 3/28/2012 10:31:08 AM.
+     1>Project "H:\Visual Studio 2010\Projects\Lot\Controller\Controller.vcxproj" on node 3 (build target(s)).
+     1>PrepareForBuild:
+         Creating directory "H:\Visual Studio 2010\Projects\Lot\Debug\".
+       InitializeBuildStatus:
+         Creating "Debug\Controller.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Controller.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Lot.cpp Controller.cpp
+         Controller.cpp
+     1>h:\visual studio 2010\projects\lot\controller\controller.cpp(50): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "StdAfx.h"' to your source?
+         Lot.cpp
+     1>h:\visual studio 2010\projects\lot\controller\lot.cpp(46): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "StdAfx.h"' to your source?
+         Generating Code...
+     1>Done Building Project "H:\Visual Studio 2010\Projects\Lot\Controller\Controller.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.48
