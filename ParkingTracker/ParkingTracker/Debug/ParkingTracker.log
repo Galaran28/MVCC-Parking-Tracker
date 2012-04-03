@@ -1,0 +1,38 @@
+﻿Build started 4/3/2012 1:09:56 PM.
+     1>Project "H:\MVCC-Parking-Tracker\ParkingTracker\ParkingTracker\ParkingTracker.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\ParkingTracker.unsuccessfulbuild".
+       ClCompile:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Controller.cpp RandomNumGenerator.cpp main.cpp
+         main.cpp
+         RandomNumGenerator.cpp
+         Controller.cpp
+         Generating Code...
+       ManifestResourceCompile:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\ParkingTracker.exe.embed.manifest.res" Debug\ParkingTracker_manifest.rc 
+       Link:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\MVCC-Parking-Tracker\ParkingTracker\Debug\ParkingTracker.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\ParkingTracker.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"H:\MVCC-Parking-Tracker\ParkingTracker\Debug\ParkingTracker.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\MVCC-Parking-Tracker\ParkingTracker\Debug\ParkingTracker.lib" /MACHINE:X86 Debug\ParkingTracker.exe.embed.manifest.res
+         Debug\Controller.obj
+         Debug\Lot.obj
+         Debug\main.obj
+         Debug\RandImplement.obj
+         Debug\RandomNumGenerator.obj
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\ParkingTracker.exe.embed.manifest" /manifest Debug\ParkingTracker.exe.intermediate.manifest
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\ParkingTracker.exe.embed.manifest.res" Debug\ParkingTracker_manifest.rc 
+       LinkEmbedManifest:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\MVCC-Parking-Tracker\ParkingTracker\Debug\ParkingTracker.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\ParkingTracker.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"H:\MVCC-Parking-Tracker\ParkingTracker\Debug\ParkingTracker.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\MVCC-Parking-Tracker\ParkingTracker\Debug\ParkingTracker.lib" /MACHINE:X86 Debug\ParkingTracker.exe.embed.manifest.res
+         Debug\Controller.obj
+         Debug\Lot.obj
+         Debug\main.obj
+         Debug\RandImplement.obj
+         Debug\RandomNumGenerator.obj
+         ParkingTracker.vcxproj -> H:\MVCC-Parking-Tracker\ParkingTracker\Debug\ParkingTracker.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\ParkingTracker.unsuccessfulbuild".
+         Touching "Debug\ParkingTracker.lastbuildstate".
+     1>Done Building Project "H:\MVCC-Parking-Tracker\ParkingTracker\ParkingTracker\ParkingTracker.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.53

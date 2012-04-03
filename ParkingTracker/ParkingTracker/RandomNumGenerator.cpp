@@ -3,7 +3,6 @@
 #include<ctime>
 #include "randHead.h"
 using namespace std;
-
 int main()
 {
 	randHead rand1;

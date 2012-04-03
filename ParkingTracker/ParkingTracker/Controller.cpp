@@ -7,6 +7,7 @@
 #include <stdlib.h>
 using namespace std;
 
+/*
 int ChangeTotals(int, int, int);
 void LogChange(int, int, int, int);
 int main()
@@ -43,7 +44,7 @@ int main()
 		ChangeTotals(lot, status, time);
 }
 
-int ChangeTotals(int lot, int status, int time)
+void ChangeTotals(int lot, int status, int time)
 {
 	Lot Admin(40);
 	Lot Lot1(500);
@@ -266,10 +267,4 @@ void LogChange(int lot, int status, int parks, int time)
 			else if (status == 2)
 				log << time << " :: car can't find a parking spot" << endl;
 	}
-
-
-
-
-
-
-
+}*/
