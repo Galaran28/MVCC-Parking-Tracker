@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Lot.h"
+#include "randHead.h"
 #include <fstream>
 #include <string>
 #include <sstream>//needed to take care of istringstream line
@@ -9,20 +10,24 @@ using namespace std;
 
 void ChangeTotals(int, int, int);//function previews
 void LogChange(int, int, int, int);
+Lot Admin(40);//create class for each lot, starting maxSize is arg
+Lot Lot1(500);
+Lot Lot2(600);
+Lot Lot3(200);
+Lot Dorm(200);
+Lot Open(500);
+Lot Maint(200);
+Lot Overflow(300);
 int main()
 {
-	Lot Admin(40);//create class for each lot, starting maxSize is arg
-	Lot Lot1(500);
-	Lot Lot2(600);
-	Lot Lot3(200);
-	Lot Dorm(200);
-	Lot Open(500);
-	Lot Maint(200);
-	Lot Overflow(300);
 	int lot, status, time;//declare variables that are the args for ChangeTotals
 	string line, sLot, sStatus, sTime;//strings for reading and eventual conversion to int
+
+	randHead rand;
+	rand.generateCars(); //genertates number of cars going to each entrance
+
 	
-	//The following would need to be in a loop until we reach the end of the simulation
+	/*//The following would need to be in a loop until we reach the end of the simulation
 	line = "1,2,0009";//test line, to test splitting on commas, takes input in format lot,status,time
 	istringstream input(line);//create an istringstream, input, that takes the current line as an argument
 	getline(input, sLot, ',');//get the lot number
@@ -43,6 +48,7 @@ int main()
 	}
 	if (goodInput == true)//if the input is okay, update the totals
 		ChangeTotals(lot, status, time);
+		*/
 }
 
 void ChangeTotals(int lot, int status, int time)
@@ -50,14 +56,6 @@ void ChangeTotals(int lot, int status, int time)
 the car can't find a parking spot
 */
 {
-	Lot Admin(40);
-	Lot Lot1(500);
-	Lot Lot2(600);
-	Lot Lot3(200);
-	Lot Dorm(200);
-	Lot Open(500);
-	Lot Maint(200);
-	Lot Overflow(300);
 	switch (lot)//case statement to decide which lot to update
 	{	
 	case 1:
