@@ -7,12 +7,11 @@
 #include <stdlib.h>
 using namespace std;
 
-/*
-int ChangeTotals(int, int, int);
+void ChangeTotals(int, int, int);//function previews
 void LogChange(int, int, int, int);
 int main()
 {
-	Lot Admin(40);
+	Lot Admin(40);//create class for each lot, starting maxSize is arg
 	Lot Lot1(500);
 	Lot Lot2(600);
 	Lot Lot3(200);
@@ -20,31 +19,36 @@ int main()
 	Lot Open(500);
 	Lot Maint(200);
 	Lot Overflow(300);
-	int lot, status, time;
-	string line, sLot, sStatus, sTime;
-	line = "1,2,0009";
-	istringstream input(line);
-	getline(input, sLot, ',');
-	getline(input, sStatus, ',');
-	getline(input, sTime, ',');
-	lot = atoi (sLot.c_str());
-	status = atoi (sStatus.c_str());
-	time = atoi (sTime.c_str());
-	bool goodInput = true;
+	int lot, status, time;//declare variables that are the args for ChangeTotals
+	string line, sLot, sStatus, sTime;//strings for reading and eventual conversion to int
+	
+	//The following would need to be in a loop until we reach the end of the simulation
+	line = "1,2,0009";//test line, to test splitting on commas, takes input in format lot,status,time
+	istringstream input(line);//create an istringstream, input, that takes the current line as an argument
+	getline(input, sLot, ',');//get the lot number
+	getline(input, sStatus, ',');//get the status of the car, leaving or parking (0 or 1)
+	getline(input, sTime, ',');//get the time
+	lot = atoi (sLot.c_str());//convert the lot string to an int
+	status = atoi (sStatus.c_str());//convert the status string to an int
+	time = atoi (sTime.c_str());//convert the time string to an int
+	bool goodInput = true;//define a boolean value to see if the input format is good
 	while (goodInput)
 	{
-		if (!(lot > 0 && lot < 9))
+		if (!(lot > 0 && lot < 9))//check if the lot number is within it's boundaries
 			goodInput = false;
-		if (!(status == 1 || status == 0))
+		if (!(status == 1 || status == 0 || status == 2))//check if the car is coming or going
 			goodInput = false;
-		if (!(time >= 0 && time <= 2359))
+		if (!(time >= 0 && time <= 2359))//check if the time is within bounds
 			goodInput = false;
 	}
-	if (goodInput == true)
+	if (goodInput == true)//if the input is okay, update the totals
 		ChangeTotals(lot, status, time);
 }
 
 void ChangeTotals(int lot, int status, int time)
+/*function takes the lot number, car status, and time, changes the total cars in the lot, or calls a function to check a new lot if
+the car can't find a parking spot
+*/
 {
 	Lot Admin(40);
 	Lot Lot1(500);
@@ -54,25 +58,25 @@ void ChangeTotals(int lot, int status, int time)
 	Lot Open(500);
 	Lot Maint(200);
 	Lot Overflow(300);
-	switch (lot)
+	switch (lot)//case statement to decide which lot to update
 	{	
 	case 1:
 			
-			if (status == 1)
+			if (status == 1)//if parking
 			{
-				Admin.Add();
+				Admin.Add();//add the car initially
 				if ( Admin.getCurrentSize() < Admin.getMaxSize())
-					LogChange(lot, status, 1, time);
+					LogChange(lot, status, 1, time); //if room, the car parks, outputs to the log
 				else
 				{
-					LogChange(lot, status, 0, time);
-					status = 0;
+					LogChange(lot, status, 0, time);//output if car can't find a spot to the log
+					status = 0;//change status 
 				}
 			}
-			else if (status == 0)
+			else if (status == 0)//hopefully this will catch if the status changed
 			{
-				Admin.Subtract();
-				LogChange(lot, status, 2, time);
+				Admin.Subtract();//subtract a car from the lot
+				LogChange(lot, status, 2, time);//output if car leaves
 			}
 			break;
 		case 2:
@@ -205,6 +209,8 @@ void ChangeTotals(int lot, int status, int time)
 }
 
 void LogChange(int lot, int status, int parks, int time)
+/* function that takes care of the log file, outputs status based on the lot and if the car parks, 
+can't find a spot, or leaves*/
 {
 	ofstream log;
 	log.open ("log20122012201220122012.txt", ios::app);
@@ -267,4 +273,11 @@ void LogChange(int lot, int status, int parks, int time)
 			else if (status == 2)
 				log << time << " :: car can't find a parking spot" << endl;
 	}
-}*/
+}
+
+
+
+
+
+
+
