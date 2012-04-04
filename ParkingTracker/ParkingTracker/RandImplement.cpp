@@ -12,20 +12,37 @@ randHead::randHead()
 	hour = 0;
 }
 
-int randHead::getCars()
+void randHead::getCars()
 {
 	randCarsPerHour = rand() % 2490 + 0000;
-	cout << "cars: " << randCarsPerHour << endl;
-	return randCarsPerHour;
+	shermanA = (randCarsPerHour * .25);
+	shermanB = (randCarsPerHour * .25);
+	tildenA = (randCarsPerHour * .30);
+	armory = (randCarsPerHour * .10);
+	tildenB = (randCarsPerHour * .10);
 }
 
-/*void randHead::incrementHour()
+int randHead::getShermanACars();
 {
-	hour++;
-}*/
-
-int randHead::getHours()
-{
-	return hour;
+	return shermanA;
 }
 
+int randHead::getShermanBCars();
+{
+	return shermanB;
+}
+
+int randHead::getTildenACars();
+{
+	return tildenA;
+}
+
+int randHead::getTildenBCars();
+{
+	return tildenB;
+}
+
+int randHead::getArmoryCars();
+{
+	return armory;
+}

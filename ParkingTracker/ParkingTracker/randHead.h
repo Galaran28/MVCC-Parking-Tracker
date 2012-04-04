@@ -7,9 +7,13 @@ class randHead
 {
 public:
 	randHead();
-	int getCars();
-	void incrementHour();
-	int getHours();
+	void getCars();
+	int getShermanACars();
+	int getShermanBCars();
+	int getTildenACars();
+	int getTildenBCars();
+	int getArmoryCars();
 private:
 	int random, randCarsPerHour, hour;
+	int shermanA, shermanB, tildenA, armory, tildenB;
 };
