@@ -11,9 +11,40 @@ randHead::randHead()
 	randCarsPerHour = rand() % 2490 + 0000;
 }
 
-void randHead::generateCars()
+void randHead::generateCars(int hour)
 {
-	randCarsPerHour = rand() % 2490 + 0000;
+	//set celling for number of cars based on time of day
+	int randMax;
+	if (hour >= 0 && hour <= 8)
+	{
+		randMax = hour * (rand() % 100) + 3;// not many cars
+	}
+	else if (hour == 9)
+	{
+		randMax = 1500; //spike of cars
+	}
+	else if (hour == 10 || hour == 11)
+	{
+		randMax = hour * (rand() % 300) + 1;//not many
+	}
+	else if (hour == 12)
+	{
+		randMax = 1000;//spike
+	}
+	else if (hour >= 13 && hour <= 17)
+	{
+		randMax = hour * (rand() % 200) + 1;//not many
+	}
+	else if (hour == 18)
+	{
+		randMax = 1500;// spike
+	}
+	else if (hour >= 19 && hour <= 23)
+	{
+		randMax = hour * (rand() % 150) + 3;//not many
+	}
+	randCarsPerHour = rand() % randMax + 0000; //generates cars
+	//adjusts cars to various entrances based on percentages
 	shermanA = (randCarsPerHour * .25);
 	shermanB = (randCarsPerHour * .25);
 	tildenA = (randCarsPerHour * .30);

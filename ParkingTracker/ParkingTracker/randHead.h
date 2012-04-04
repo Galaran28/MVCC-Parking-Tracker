@@ -7,7 +7,7 @@ class randHead
 {
 public:
 	randHead();
-	void generateCars();
+	void generateCars(int);
 	int getShermanACars();
 	int getShermanBCars();
 	int getTildenACars();
