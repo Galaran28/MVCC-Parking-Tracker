@@ -1,4 +1,5 @@
 #include "Lot.h"
+
 using namespace std;
 
 Lot::Lot(int size)
@@ -26,7 +27,7 @@ void Lot::Subtract()
 	--currentSize;
 }
 
-void Lot::PercentageFull() //why not combine this with getPercentage?
+void Lot::PercentageFull()
 { 
 	percentage = (getCurrentSize()/getMaxSize()) * 100; 
 }
