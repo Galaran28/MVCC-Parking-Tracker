@@ -10,6 +10,7 @@ public:
 	int getCars();
 	void incrementHour();
 	int getHours();
+	void updateLot(int, Lot);
 private:
 	int random, randCarsPerHour, hour;
 };

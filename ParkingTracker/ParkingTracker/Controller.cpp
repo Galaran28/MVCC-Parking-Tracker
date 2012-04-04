@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Lot.h"
+#include "randHead.h"
 #include <fstream>
 #include <string>
 #include <sstream>//needed to take care of istringstream line
