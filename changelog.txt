@@ -5,3 +5,6 @@ V0.5
 	for easier reading
 - created the lot chooser function to decide which instance to pass 
 	stuff to
+
+Doc
+-Added a bunch of stuff that i'll elaborate on when I get out of work tonight.  
