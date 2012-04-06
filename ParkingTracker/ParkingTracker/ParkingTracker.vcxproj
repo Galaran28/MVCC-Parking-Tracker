@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{19D64E46-040A-4F9E-BDD8-6A97E38BD808}</ProjectGuid>
+    <ProjectGuid>{454B5186-E8D3-4B97-B34C-6433817DB819}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ParkingTracker</RootNamespace>
+    <RootNamespace>parkingTracker</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -74,10 +74,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Car.h" />
     <ClInclude Include="Lot.h" />
     <ClInclude Include="randHead.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Lot.cpp" />
     <ClCompile Include="RandImplement.cpp" />

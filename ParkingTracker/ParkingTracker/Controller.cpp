@@ -2,14 +2,29 @@
 #include "Lot.h"
 #include "randHead.h"
 #include <fstream>
+#include "Car.h"
 #include <string>
 #include <sstream>//needed to take care of istringstream line
 #include <stdio.h>
 #include <stdlib.h>
 using namespace std;
 
-void ChangeTotals(int, int, int);//function previews
-void LogChange(int, int, int, int);
+//void ChangeTotals(int, int, int);//function previews
+//void LogChange(int, int, int, int);
+void LotChooser(int, int, string);
+void FindSpot(enum lotname, enum lotname);
+enum names LotGroup(enum names entrance);
+bool LotGroup1Full();
+bool LotGroup2Full();
+bool AllLotsFull();
+// used same enum type (names) for lots and entrances so recursion would be possible
+enum names { mall, //go to mall
+			 admin, lot1, lot2, lot3, dorm, open, maint, overflow, //lot names
+			 shermanA, shermanB, armory, tildenA, tildenB, //entrance names
+			 lotGroupA, lotGroupB // group names
+			};	
+
+
 Lot Admin(40);//create class for each lot, starting maxSize is arg
 Lot Lot1(500);
 Lot Lot2(600);
@@ -18,259 +33,283 @@ Lot Dorm(200);
 Lot Open(500);
 Lot Maint(200);
 Lot Overflow(300);
+
 int main()
 {
 	int lot, status, time;//declare variables that are the args for ChangeTotals
 	string line, sLot, sStatus, sTime;//strings for reading and eventual conversion to int
 
-	randHead rand;
-	rand.generateCars(); //genertates number of cars going to each entrance
-
+	//randHead rand;
+	//rand.generateCars(); //genertates number of cars going to each entrance
+	int count = 0;
 	
-	/*//The following would need to be in a loop until we reach the end of the simulation
-	line = "1,2,0009";//test line, to test splitting on commas, takes input in format lot,status,time
-	istringstream input(line);//create an istringstream, input, that takes the current line as an argument
-	getline(input, sLot, ',');//get the lot number
-	getline(input, sStatus, ',');//get the status of the car, leaving or parking (0 or 1)
-	getline(input, sTime, ',');//get the time
-	lot = atoi (sLot.c_str());//convert the lot string to an int
-	status = atoi (sStatus.c_str());//convert the status string to an int
-	time = atoi (sTime.c_str());//convert the time string to an int
-	bool goodInput = true;//define a boolean value to see if the input format is good
-	while (goodInput)
+	while (count < 10)
 	{
-		if (!(lot > 0 && lot < 9))//check if the lot number is within it's boundaries
-			goodInput = false;
-		if (!(status == 1 || status == 0 || status == 2))//check if the car is coming or going
-			goodInput = false;
-		if (!(time >= 0 && time <= 2359))//check if the time is within bounds
-			goodInput = false;
-	}
-	if (goodInput == true)//if the input is okay, update the totals
-		ChangeTotals(lot, status, time);
-		*/
+		line = "1,1,0009";//test line, to test splitting on commas, takes input in format lot,status,time
+		istringstream input(line);//create an istringstream, input, that takes the current line as an argument
+		getline(input, sLot, ',');//get the lot number
+		getline(input, sStatus, ',');//get the status of the car, leaving or parking (0 or 1)
+		getline(input, sTime, ',');//get the time
+		lot = atoi (sLot.c_str());//convert the lot string to an int
+		status = atoi (sStatus.c_str());//convert the status string to an int
+		time = atoi (sStatus.c_str());
+		bool goodInput = false;//define a boolean value to see if the input format is good
+		while (!goodInput)
+		{
+			goodInput = true;
+			if (!(lot > 0 && lot < 9))//check if the lot number is within it's boundaries
+				goodInput = false;
+			if (!(status == 1 || status == 0 || status == 2))//check if the car is coming or going
+				goodInput = false;
+			if (!(time >= 0 && time <= 2359))//check if the time is within bounds
+				goodInput = false;
+		}
+		if (goodInput == true)//if the input is okay, update the totals
+			LotChooser(lot, status, sTime);
+		++count;
+	}	
 }
 
-void ChangeTotals(int lot, int status, int time)
-/*function takes the lot number, car status, and time, changes the total cars in the lot, or calls a function to check a new lot if
-the car can't find a parking spot
+enum names LotGroup(enum names entrance)
+{
+	if (entrance >= 1 && entrance < 6)
+	return lotGroupA;
+
+	else if (entrance == 7 || entrance == 8)
+	return lotGroupB;
+}
+
+bool LotGroupAFull() 
+//checks if adjoining lots are full
+{
+	return (Admin.IsFull() && Lot1.IsFull() && Lot2.IsFull() && Lot3.IsFull() && Dorm.IsFull());
+}
+
+bool LotGroupBFull()
+//checks if all adjoining lots are full
+{
+	return (Maint.IsFull() && Overflow.IsFull());
+}
+
+bool AllLotsFull()
+//checks if all lots are full
+{
+	return (LotGroupAFull() && LotGroupBFull() && Open.IsFull());
+}
+
+enum names ParkingIntent(enum names entrance)
+/*	
+	Entrance Function
+	Takes desired entrance, returns desired destination lot
+	Considers if all attached lots are full
+	If all attached lots are full, sends car to different "lot group"
+
 */
 {
-	switch (lot)//case statement to decide which lot to update
-	{	
-	case 1:
+	int intent = rand() % 100 + 1; //Generates number from 1 to 100
+
+	if (entrance == shermanA)						//Wants to enter at Sherman A			
+	{
+		if (!Open.IsFull())							//If Open lot isn't full
+			return open;							//heads to Open lot
+		else	
+		{											
+			if (!LotGroupAFull())					//If Open lot is full
+				return ParkingIntent(shermanB);		//tries to enter at Sherman B, recursion
+
+			else if (!LotGroupBFull())				//If Sherman B is full 
+				return ParkingIntent(tildenB);		//tries to enter at Tilden B, recursion
+
+			else
+				return mall;						//heads to Mall			
 			
-			if (status == 1)//if parking
+		}
+	}
+	else if (entrance == shermanB)	//Wants to enter at Sherman B
+	{
+		if (!LotGroupAFull())		//If attached lots aren't full
+		{
+			if (intent == 1)		//heads to Admin lot
+				return admin;
+	
+			else if (intent <= 76)	//heads to Lot 1
+				return lot1;
+
+			else if (intent <= 96)	//heads to Lot 2
+				return lot2;
+
+			else if (intent <= 98)	//heads to Lot 3
+				return lot3;
+
+			else
+				return dorm;		//heads to Dorm lot
+		}
+		else									
+			if(!Open.IsFull())					//If attached lots are full
+				return ParkingIntent(shermanA);	//Tries to enter at Sherman A (Open lot)
+
+			else if (!LotGroupBFull())			//If Open lot is full
+				return ParkingIntent(tildenB);	//Tries to enter at tolden B
+
+			else return mall;					//heads to mall
+	}
+	else if (entrance == armory)	//Wants to enter at Armory
+	{
+		if (!LotGroupAFull())
+		{
+			if (intent <= 78)		//heads to Lot 1
+				return lot1;
+
+			else if (intent <= 96)	//heads to Lot 2
+				return lot2;
+
+			else if (intent <= 99)	//heads to Lot 3
+				return lot3;
+
+			else
+				return dorm;		//heads to Dorm lot
+		}
+		else
+		{
+			if (!LotGroupBFull())				//if attached lots are full (LotGroupA)
+				return ParkingIntent(tildenB);	//Tries to enter at tilden B
+
+			else if(!Open.IsFull())				//If attached lots are full	(LotGroupB)							
+				return ParkingIntent(shermanA);	//Tries to enter at Sherman A (Open lot)
+			else
+				return mall;					//heads to mall
+		}
+
+	}
+
+	else if (entrance == tildenA)	//Wants to enter at Tilden A
+	{
+		if (!LotGroupAFull())
+		{
+			if (intent <= 58)		//heads to Lot 1
+				return lot1;
+
+			else if (intent <= 88)	//heads toLot 2
+				return lot2;
+
+			else if (intent <= 90)	//heads toLot 3
+				return lot3;
+
+			else
+				return dorm;		//heads to Dorm
+		}
+		else
+		{
+			if (!LotGroupBFull())				//if attached lots are full (LotGroupA)
+				return ParkingIntent(tildenB);	//Tries to enter at tilden B
+
+			else if(!Open.IsFull())				//If attached lots are full	(LotGroupB)							
+				return ParkingIntent(shermanA);	//Tries to enter at Sherman A (Open lot)
+			else
+				return mall;					//heads to mall
+
+
+		}
+	}
+	else if (entrance == tildenB)	//Wants to enter at Tilden B
+	{
+		if (!LotGroupBFull())	
+		{
+		if (intent <= 80)			//heads to Maint
+			return maint;
+
+		else						//heads to Overflow
+			return overflow;
+		}
+		else
+		{
+			if (!LotGroupAFull())				//If attached lots are full	(LotGroupB)	
+				return ParkingIntent(armory);	//Tries to enter at Armory
+
+			else if(!Open.IsFull())				//If attached lots are full	(LotGroupA)							
+				return ParkingIntent(shermanA);	//Tries to enter at Sherman A (Open lot)
+
+			else
+				return mall;					//heads to mall
+
+		}
+	}	
+}
+
+void FindSpot(enum names entrance, enum names destination)
+{
+	if (LotGroup(entrance) == lotGroupA)
+	{
+		int emptylot[4];
+		if 
+	}
+	/*else if (entrance == open)
+
+	else */
+	if (LotGroup(entrance) == lotGroupB)
+	{
+		ChangeTotals(maint, 1, time);//Total increases as car drives in
+
+			if ((destination == overflow)||(Maint.IsFull()))
+		{	
 			{
-				Admin.Add();//add the car initially
-				if ( Admin.getCurrentSize() < Admin.getMaxSize())
-					LogChange(lot, status, 1, time); //if room, the car parks, outputs to the log
-				else
-				{
-					LogChange(lot, status, 0, time);//output if car can't find a spot to the log
-					status = 0;//change status 
-				}
+				ChangeTotals(maint, 0, time);
+				ChangeTotals(overflow, 1, time);
 			}
-			else if (status == 0)//hopefully this will catch if the status changed
-			{
-				Admin.Subtract();//subtract a car from the lot
-				LogChange(lot, status, 2, time);//output if car leaves
-			}
-			break;
-		case 2:
-			if (status == 1)
-			{
-				Lot1.Add();
-				if ( Lot1.getCurrentSize() < Lot1.getMaxSize())
-					LogChange(lot, status, 1, time);
-				else
-				{
-					LogChange(lot, status, 0, time);
-					status = 0;
-				}
-			}
-			else if (status == 0)
-			{
-				Lot1.Subtract();
-				LogChange(lot, status, 2, time);
-			}
-			break;
-		case 3:
-			if (status == 1)
-			{
-				Lot2.Add();
-				if ( Lot2.getCurrentSize() < Lot2.getMaxSize())
-					LogChange(lot, status, 1, time);
-				else
-				{
-					LogChange(lot, status, 0, time);
-					status = 0;
-				}
-			}
-			else if (status == 0)
-			{
-				Lot2.Subtract();
-				LogChange(lot, status, 2, time);
-			}
-			break;
-		case 4:
-			if (status == 1)
-			{
-				Lot3.Add();
-				if ( Lot3.getCurrentSize() < Lot3.getMaxSize())
-					LogChange(lot, status, 1, time);
-				else
-				{
-					LogChange(lot, status, 0, time);
-					status = 0;
-				}
-			}
-			else if (status == 0)
-			{
-				Lot3.Subtract();
-				LogChange(lot, status, 2, time);
-			}
-			break;
-		case 5: 
-			if (status == 1)
-			{
-				Dorm.Add();
-				if ( Dorm.getCurrentSize() < Dorm.getMaxSize())
-					LogChange(lot, status, 1, time);
-				else
-				{
-					LogChange(lot, status, 0, time);
-					status = 0;
-				}
-			}
-			else if (status == 0)
-			{
-				Dorm.Subtract();
-				LogChange(lot, status, 2, time);
-			}
-			break;
-		case 6: 
-			if (status == 1)
-			{
-				Open.Add();
-				if ( Open.getCurrentSize() < Open.getMaxSize())
-					LogChange(lot, status, 1, time);
-				else
-				{
-					LogChange(lot, status, 0, time);
-					status = 0;
-				}
-			}
-			else if (status == 0)
-			{
-				Open.Subtract();
-				LogChange(lot, status, 2, time);
-			}
-			break;
-		case 7:
-			if (status == 1)
-			{
-				Maint.Add();
-				if ( Maint.getCurrentSize() < Maint.getMaxSize())
-					LogChange(lot, status, 1, time);
-				else
-				{
-					LogChange(lot, status, 0, time);
-					status = 0;
-				}
-			}
-			else if (status == 0)
-			{
-				Maint.Subtract();
-				LogChange(lot, status, 2, time);
-			}
-			break;
-		case 8:
-			if (status == 1)
-			{
-				Overflow.Add();
-				if ( Overflow.getCurrentSize() < Overflow.getMaxSize())
-					LogChange(lot, status, 1, time);
-				else
-				{
-					LogChange(lot, status, 0, time);
-					status = 0;
-				}
-			}
-			else if (status == 0)
-			{
-				Overflow.Subtract();
-				LogChange(lot, status, 2, time);
-			}
-			break;
+		}////Left off here!!!
+		else
+
+
 	}
 }
 
-void LogChange(int lot, int status, int parks, int time)
-/* function that takes care of the log file, outputs status based on the lot and if the car parks, 
-can't find a spot, or leaves*/
+void LotChooser(int lot, int status, string time)//a function that provides lot-specific info, like the name and which lot
+	//the car is parking in, as well as status. Time is a string here for easier formatting in the log
+	
+	
+	/* !! doesn't account for lot intention, i.e. 
+	A car drives into lot 1 and wants to park in the Dorm lot
+		- it enters lot 1, and need to traverse thorough lot 2 and 3 before it gets to Dorm.  This
+			should increment and decrement the lots that the car is traveling through.  When it gets to 
+			Dorm it need to check to see if its full.  If it is, it leaves that lot and tries the adjacent 
+			lot, lot3, and must again trigger the increment/decrement.  
+		- this problem doesn't apply to Open lot and is easily solved in LotGroupB (Maint and Overflow) but is a concern in
+			LotGroupA(Admin, Lot1, Lot2, Lot3, Dorm)
+		- I think it could be done with an int array[4] that takes the enum lot names returned from ParkingIntent.  It could check 
+			each one and then specify a route.  
+
+		- I have an idea how to implement this but I have to go to work.  I should be able to get it done tonight.  
+			
+	*/
 {
-	ofstream log;
-	log.open ("log20122012201220122012.txt", ios::app);
 	switch (lot)
 	{
-		case 1:
-			if (status == 1)
-				log << time << " :: car parks in admin lot"  << endl;
-			else if (status == 0)
-				log << time << " :: car leaves admin lot" << endl;
-			else if (status == 2)
-				log << time << " :: car can't find a parking spot" << endl;
-		case 2:
-			if (status == 1)
-				log << time << " :: car parks in lot1"  << endl;
-			else if (status == 0)
-				log << time << " :: car leaves lot1" << endl;
-			else if (status == 2)
-				log << time << " :: car can't find a parking spot" << endl;
-		case 3:
-			if (status == 1)
-				log << time << " :: car parks in lot2"  << endl;
-			else if (status == 0)
-				log << time << " :: car leaves lot2" << endl;
-			else if (status == 2)
-				log << time << " :: car can't find a parking spot" << endl;
-		case 4:
-			if (status == 1)
-				log << time << " :: car parks in lot3"  << endl;
-			else if (status == 0)
-				log << time << " :: car leaves lot3" << endl;
-			else if (status == 2)
-				log << time << " :: car can't find a parking spot" << endl;
-		case 5:
-			if (status == 1)
-				log << time << " :: car parks in Dorm lot"  << endl;
-			else if (status == 0)
-				log << time << " :: car leaves Dorm lot" << endl;
-			else if (status == 2)
-				log << time << " :: car can't find a parking spot" << endl;
-		case 6:
-			if (status == 1)
-				log << time << " :: car parks in open lot"  << endl;
-			else if (status == 0)
-				log << time << " :: car leaves open lot" << endl;
-			else if (status == 2)
-				log << time << " :: car can't find a parking spot" << endl;
-		case 7:
-			if (status == 1)
-				log << time << " :: car parks in maint lot"  << endl;
-			else if (status == 0)
-				log << time << " :: car leaves maint lot" << endl;
-			else if (status == 2)
-				log << time << " :: car can't find a parking spot" << endl;
-		case 8:
-			if (status == 1)
-				log << time << " :: car parks in overflow lot"  << endl;
-			else if (status == 0)
-				log << time << " :: car leaves overflow lot" << endl;
-			else if (status == 2)
-				log << time << " :: car can't find a parking spot" << endl;
+	case 1:
+		Admin.ChangeTotals("Admin", status, time);
+		break;
+	case 2:
+		Lot1.ChangeTotals("Lot 1", status, time);
+		break;
+	case 3:
+		Lot2.ChangeTotals("Lot 2", status, time);
+		break;
+	case 4:
+		Lot3.ChangeTotals("Lot 3", status, time);
+		break;
+	case 5:
+		Dorm.ChangeTotals("Dorm", status, time);
+		break;
+	case 6:
+		Maint.ChangeTotals("Maintenance", status, time);
+		break;
+	case 7:
+		Overflow.ChangeTotals("Overflow", status, time);
+		break;
+	case 8:
+		Open.ChangeTotals("Open", status, time);
+		break;
 	}
+
 }
 
 

@@ -21,15 +21,21 @@
     <ClInclude Include="randHead.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Controller.cpp">
+    <ClCompile Include="RandImplement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Lot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RandImplement.cpp">
+    <ClCompile Include="Controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Car.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

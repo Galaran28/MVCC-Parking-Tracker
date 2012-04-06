@@ -11,7 +11,7 @@ randHead::randHead()
 	randCarsPerHour = rand() % 2490 + 0000;
 }
 
-void randHead::generateCars(int hour)
+/*void randHead::generateCars(int hour)
 {
 	//set celling for number of cars based on time of day
 	int randMax;
@@ -50,7 +50,7 @@ void randHead::generateCars(int hour)
 	tildenA = (randCarsPerHour * .30);
 	armory = (randCarsPerHour * .10);
 	tildenB = (randCarsPerHour * .10);
-}
+}*/
 
 int randHead::getShermanACars()
 {
