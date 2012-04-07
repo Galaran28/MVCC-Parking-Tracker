@@ -12,6 +12,8 @@ using namespace std;
 //void ChangeTotals(int, int, int);//function previews
 //void LogChange(int, int, int, int);
 void LotChooser(int, int, string);
+<<<<<<< HEAD
+=======
 void FindSpot(enum lotname, enum lotname);
 enum names LotGroup(enum names entrance);
 bool LotGroup1Full();
@@ -24,6 +26,7 @@ enum names { mall, //go to mall
 			 lotGroupA, lotGroupB // group names
 			};	
 
+>>>>>>> e0b2112409aa7b9d864ab6347bb2abf17f9f63cd
 
 Lot Admin(40);//create class for each lot, starting maxSize is arg
 Lot Lot1(500);
@@ -70,6 +73,11 @@ int main()
 	}	
 }
 
+<<<<<<< HEAD
+
+void LotChooser(int lot, int status, string time)//a function that provides lot-specific info, like the name and which lot
+	//the car is parking in, as well as status. Time is a string here for easier formatting in the log
+=======
 enum names LotGroup(enum names entrance)
 {
 	if (entrance >= 1 && entrance < 6)
@@ -281,6 +289,7 @@ void LotChooser(int lot, int status, string time)//a function that provides lot-
 		- I have an idea how to implement this but I have to go to work.  I should be able to get it done tonight.  
 			
 	*/
+>>>>>>> e0b2112409aa7b9d864ab6347bb2abf17f9f63cd
 {
 	switch (lot)
 	{

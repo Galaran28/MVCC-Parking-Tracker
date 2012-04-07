@@ -74,10 +74,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Car.h" />
     <ClInclude Include="Lot.h" />
     <ClInclude Include="randHead.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Lot.cpp" />
     <ClCompile Include="RandImplement.cpp" />

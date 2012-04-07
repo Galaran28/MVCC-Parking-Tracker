@@ -33,9 +33,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Controller.cpp">
+<<<<<<< HEAD
+=======
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Car.cpp">
+>>>>>>> e0b2112409aa7b9d864ab6347bb2abf17f9f63cd
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

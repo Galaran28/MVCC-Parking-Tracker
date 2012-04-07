@@ -4,7 +4,11 @@ V0.5
 - moved the logging and changetotal functions into the lot class
 	for easier reading
 - created the lot chooser function to decide which instance to pass 
+<<<<<<< HEAD
+	stuff to
+=======
 	stuff to
 
 Doc
 -Added a bunch of stuff that i'll elaborate on when I get out of work tonight.  
+>>>>>>> e0b2112409aa7b9d864ab6347bb2abf17f9f63cd
