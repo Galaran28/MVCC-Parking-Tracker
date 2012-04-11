@@ -4,9 +4,13 @@ class Car
 {
 public:
 	Car(int);
-	int Path(int, int); //entrance and destination
-
+	void SetEntrance(int);
+	void SetDestination(int);
+	int GetStatus();
+	int GetEntrance();
+	int GetDestination();
+	~Car();
 
 private:
-	int goal;
+	int status, entrance, destination;
 };

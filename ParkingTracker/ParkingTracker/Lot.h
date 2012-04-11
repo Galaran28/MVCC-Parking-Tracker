@@ -11,15 +11,19 @@ public:
 	int getMaxSize();
 	double getPercentage();
 	void Add();
+	int getRemainingSpots();
 	void Subtract();
 	bool IsFull();
+	bool IsEmpty();
+	bool OverFull();
 	void PercentageFull();
 	void SizeChange(int);
 	void ChangeTotals(string, int, string);
-	void LogChange(string, int, string);
+
 private:
 	int currentSize, maxSize;
 	double percentage;
+	string lotName;
 };
 
 //this is a test 2
