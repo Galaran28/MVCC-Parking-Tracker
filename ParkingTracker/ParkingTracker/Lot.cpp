@@ -5,6 +5,7 @@ using namespace std;
 Lot::Lot(int size)//constructor that stores the intial maxsize of the lot
 {
 	maxSize = size;
+	defaultSize = size;//set up the default max size
 	currentSize = 0; //initial 
 }
 int Lot::getRemainingSpots()
@@ -101,3 +102,13 @@ void Lot::ChangeTotals(string lot, int status, string time)
 			}
 }
 */
+
+void Lot::SizeChange(int newSize)//change the capacity of the lot
+{
+	maxSize = newSize;
+}
+
+void Lot::ResetToDefaultSize()//Reset the max size back to the starting max size if maxsize has been changed
+{
+	maxSize = defaultSize;
+}

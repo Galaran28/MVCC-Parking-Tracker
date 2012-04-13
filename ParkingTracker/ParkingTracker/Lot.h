@@ -18,10 +18,11 @@ public:
 	bool OverFull();
 	void PercentageFull();
 	void SizeChange(int);
+	void ResetToDefaultSize();
 	void ChangeTotals(string, int, string);
 
 private:
-	int currentSize, maxSize;
+	int currentSize, maxSize, defaultSize;
 	double percentage;
 	string lotName;
 };

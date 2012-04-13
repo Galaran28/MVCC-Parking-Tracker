@@ -10,8 +10,6 @@
 #include <iomanip>
 using namespace std;
 
-//void ChangeTotals(int, int, int);//function previews
-//void LogChange(int, int, int, int);
 void LotChooser(int, int, string);
 int FindSpot(enum lotname, enum lotname);
 int GoHome(int);
@@ -987,38 +985,155 @@ int main()
 			LotChooser(lot, status, sTime);
 		++count;
 	}	*/
-	int hours, hour;
-	int mall = 0;
-	int count = 0;
-	randHead rand;
-	cout<<"Enter number of hours to run Simulation"<<endl;
-	cin>>hours;
-	
-	for(hour = 0; hours >= hour; hour++)//hours of simulation
-{
-	int incars = rand.generateCars(hour);//each hour generates number coming in
-	int outcars = rand.generateLeaving(hour);//and number going out
-	for(outcars; outcars > 0; --outcars)//for every car going home
+	bool runSim = true;
+	while (runSim = true)//while loop to allow simulation to run again
 	{
-		int spot = GoHome(rand.leavingLot());// decides where its leaving from and route it drives outs
-		//LogChange(spot, 0, hour);
-	}
-	for(incars; incars > 0; --incars)//for each car generated
-	{	
-		int spot = 0;//eventual location of parking spot
-		int input = rand.distributeCars(); //assign an entrance based on percentages
-		int intent = ParkingIntent((names)input);//returns entrance (for logging?)
-		if (unFullEntrance((names)input) != mall)
-		spot = FindSpot(unFullEntrance((names)input), ParkingIntent((names)input));	//returns parking lot parked in
-		else
-			Mall.Add();//to the mall with you!
-	}
-
-	cout<<"Hour = "<<hour<<endl;//prints once an hour
-	PrintLots();
-	cout<<endl;
-}
+		int hours, hour;
+		int mall = 0;
+		int count = 0;
+		int choice = 0;
+		randHead rand;
+		cout << "MVCC PARKING LOT SIMULATOR" << endl << endl;//start screen
+		cout << "\t1. Run Simulation" << endl;
+		cout << "\t2. Lot Options" << endl;
+		cout << "\t3. Quit" << endl;
+		cout << "?: ";
+		cin >> choice;
+		switch (choice) //switch based on choice
+		{
+		case 1:
+			system("cls");//clear the screen
+			cout<<"Enter number of hours to run Simulation: ";
+			cin>>hours;
 	
+			for(hour = 0; hours >= hour; hour++)//hours of simulation
+			{
+				int incars = rand.generateCars(hour);//each hour generates number coming in
+				int outcars = rand.generateLeaving(hour);//and number going out
+				for(outcars; outcars > 0; --outcars)//for every car going home
+				{
+					int spot = GoHome(rand.leavingLot());// decides where its leaving from and route it drives outs
+					//LogChange(spot, 0, hour);
+				}
+				for(incars; incars > 0; --incars)//for each car generated
+				{	
+					int spot = 0;//eventual location of parking spot
+					int input = rand.distributeCars(); //assign an entrance based on percentages
+					int intent = ParkingIntent((names)input);//returns entrance (for logging?)
+					if (unFullEntrance((names)input) != mall)
+					spot = FindSpot(unFullEntrance((names)input), ParkingIntent((names)input));	//returns parking lot parked in
+					else
+						Mall.Add();//to the mall with you!
+				}
 
+				cout<<"Hour = "<<hour<<endl;//prints once an hour
+				PrintLots();
+				cout<<endl;
+			}
+			int runAgain;
+			cout << "Would you like to run another simulation? (enter 1 if yes, anything else if no): ";//see if you want to run the sim again
+			cin >> runAgain;
+			if (runAgain == 1)
+			{
+				runSim = true;
+				system("cls");
+				Admin.ResetToDefaultSize();//reset the max size back to the starting max size
+				Lot1.ResetToDefaultSize();
+				Lot2.ResetToDefaultSize();
+				Lot3.ResetToDefaultSize();
+				Dorm.ResetToDefaultSize();
+				Maint.ResetToDefaultSize();
+				Open.ResetToDefaultSize();
+				Overflow.ResetToDefaultSize();
+			}
+			else 
+				runSim = false;
+			break;
+		case 2://changing the lot capacity
+			cout << "Choose a lot to modify: " << endl
+				<< "\t1. Admin\n\t2. Lot 1\n\t3. Lot 2\n\t4. Lot 3\n\t5. Dorm\n\t6. Open\n\t7. Maintenance\n\t8. Overflow\n\t-1. Go back\n?:";
+			cin >> choice;
+			int newCapacity;
+			switch (choice)
+			{
+				case 1: //admin lot
+					system("cls");
+					cout << "Admin" << endl;
+					cout << "Current capacity: " << Admin.getMaxSize() << endl; //display the current capacity
+					cout << "Enter new capacity: ";
+					cin >>  newCapacity;
+					Admin.SizeChange(newCapacity);//change the capacity
+					system("cls");
+					break;
+				case 2://lot 1
+					system("cls");
+					cout << "Lot 1" << endl;
+					cout << "Current capacity: " << Lot1.getMaxSize() << endl; 
+					cout << "Enter new capacity: ";
+					cin >>  newCapacity;
+					Lot1.SizeChange(newCapacity);
+					system("cls");
+					break;
+				case 3://lot 2
+					system("cls");
+					cout << "Lot 2" << endl;
+					cout << "Current capacity: " << Lot2.getMaxSize() << endl; 
+					cout << "Enter new capacity: ";
+					cin >>  newCapacity;
+					Lot2.SizeChange(newCapacity);
+					system("cls");
+					break;
+				case 4://lot 3
+					system("cls");
+					cout << "Lot 3" << endl;
+					cout << "Current capacity: " << Lot3.getMaxSize() << endl; 
+					cout << "Enter new capacity: ";
+					cin >>  newCapacity;
+					Lot3.SizeChange(newCapacity);
+					system("cls");
+					break;
+				case 5://Dorm
+					system("cls");
+					cout << "Dorm" << endl;
+					cout << "Current capacity: " << Dorm.getMaxSize() << endl; 
+					cout << "Enter new capacity: ";
+					cin >>  newCapacity;
+					Dorm.SizeChange(newCapacity);
+					system("cls");
+					break;
+				case 6://Open
+					system("cls");
+					cout << "Open" << endl;
+					cout << "Current capacity: " << Open.getMaxSize() << endl; 
+					cout << "Enter new capacity: ";
+					cin >>  newCapacity;
+					Open.SizeChange(newCapacity);
+					system("cls");
+					break;
+				case 7://Maintenance
+					system("cls");
+					cout << "Maintenence" << endl;
+					cout << "Current capacity: " << Maint.getMaxSize() << endl; 
+					cout << "Enter new capacity: ";
+					cin >>  newCapacity;
+					Maint.SizeChange(newCapacity);
+					system("cls");
+					break;
+				case 8://Overflow
+					system("cls");
+					cout << "Overflow" << endl;
+					cout << "Current capacity: " << Overflow.getMaxSize() << endl; 
+					cout << "Enter new capacity: ";
+					cin >>  newCapacity;
+					Overflow.SizeChange(newCapacity);
+					system("cls");
+					break;
+				case -1://don't modify anything
+					break;
+			}
+		case 3://quit the simulation
+			runSim = false;
+		}
+	}
 	return 0;
 }
